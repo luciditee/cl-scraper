@@ -34,7 +34,7 @@ function build_cl_uri($check) {
 }
 
 // here is where the data formatting magic happens.
-function build_data_set($dom) {
+function build_data_set($dom, $curl) {
 	if ($dom === FALSE) return false;
 	
 	$ret = array();
@@ -66,8 +66,26 @@ function build_data_set($dom) {
 		$location = trim($location);
 		$price = trim($price);
 		
+		// the data ID of the first link in the listing actually contains the images.craigslist.org
+		// reference for what image to show.
+		$image_uri = null;
+		$data_str =  $listing->find('a', 0)->attr['data-ids'];
+		$data_arr = explode(',', $data_str); // comma delimited for each image
+		if (count($data_arr) > 0) { // if there was more than zero, there is an image to download.
+			$extracted = explode(":", $data_arr[0])[1]; // whatever comes after the colon, that's the image token
+			$image_uri = "https://images.craigslist.org/".$extracted."_300x300.jpg"; // 300x300 is the preview image
+		}
+		
+		// encode the downloaded image to base64 (but only if the request succeeded).
+		curl_setopt($curl, CURLOPT_URL, $image_uri);
+		$curl_response_img = curl_exec($curl);
+		$image_b64 = null;
+		if ($curl_response_img !== false) {
+			$image_b64 = base64_encode($curl_response_img);
+		}
+		
 		// instance ClassifiedAd object.
-		$ad = new ClassifiedAd($name, $price, $location, $datetime, $itemlink);
+		$ad = new ClassifiedAd($name, $price, $location, $datetime, $itemlink, $image_b64);
 		array_push($ret, $ad);
 	}
 	

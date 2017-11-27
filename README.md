@@ -27,11 +27,56 @@ For details on how to fix your PHP configuration to add a CA, see [this helpful 
 
 Visit the domain and directory of the web server you uploaded it to, and invoke the API like so.
 
-   http://your.domain/craigslist/scraper.php?region=yourcity&category=category&keywords=keywords+go+here
+```
+http://your.domain/craigslist/scraper.php?region=yourcity&category=category&keywords=keywords+go+here
+```
 
 * `yourcity` is the craigslist most relevant to you, such as http://minneapolis.craigslist.org/ or http://grandrapids.craigslist.org/ .
 * `category` is the internal search category for Craigslist listings where you will be searching.  For example, computer hardware is `cya`.  You can use the dropdown in the search menu on Craigslist and observe the category in the URL if you aren't sure what to put here.
 * `keywords` is whatever search keywords you would search CL with, delimited+by+plus+signs.
+
+### Return Values
+
+Returns a JSON object with the following anatomy:
+
+```json
+{
+  "body": {
+    "ads": [
+      {
+        "itemName": "Macintosh Performa 630CD",
+        "askingPrice": "$80",
+        "location": "Apple Valley",
+        "datetime": "2017-11-25 17:00",
+        "itemlink": "https:\/\/minneapolis.craigslist.org\/url-goes-here"
+      },
+      {
+        "itemName": "Vintage Macintosh Plus 1 MB",
+        "askingPrice": "$100",
+        "location": "Minneapolis",
+        "datetime": "2017-11-21 20:21",
+        "itemlink": "https:\/\/minneapolis.craigslist.org\/url-goes-here"
+      },
+	  
+	  ... 
+	  
+	  ],
+    "request_uri": "https:\/\/minneapolis.craigslist.org\/search\/sya?query=macintosh"
+  },
+  "error_body": "OK",
+  "http_code": 200
+}
+```
+
+As you can see, the returned object contains a `body` object, which therein contains an array of `ads`.  The names are self-explanatory: itemName is the listing title, price is price, and so on.
+
+The `img` value within an ad contains a base64 encoded JPEG of the preview image provided for the listing.  If no preview image was provided, `null` is returned.
+
+### Errors
+
+If there is an error with your request, or with CURL, an HTTP `4xx` or `5xx` class error is sent through the header, and `error_body` contains details about the issue at hand.
+
+For example, if CURL fails to initialize, `HTTP 503` is returned, with an `error_body` looking something like `curl failed with error code 60: ...`.
 
 ## Contributing
 

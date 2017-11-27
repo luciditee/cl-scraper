@@ -50,13 +50,15 @@ class ClassifiedAd {
 	var $location = "Location";
 	var $datetime = "date/goes/here";
 	var $itemlink = "uri-goes-here";
+	var $img = null;
 	
-	function __construct($item, $price, $location, $datetime, $link) {
+	function __construct($item, $price, $location, $datetime, $link, $img) {
 		$this->itemName = $item;
 		$this->askingPrice = $price;
 		$this->location = $location;
 		$this->datetime = $datetime;
 		$this->itemlink = $link;
+		$this->img = $img;
 	}
 }
 

@@ -79,7 +79,7 @@ if ($curl !== FALSE) {
 	} else {
 		// convert curl response to DOM object
 		$dom = str_get_html($curl_response);
-		$response_body = build_data_set($dom);
+		$response_body = build_data_set($dom, $curl);
 		
 		// finally, check if the data set worked out.
 		if ($dom === FALSE || $response_body === FALSE) {
@@ -88,6 +88,7 @@ if ($curl !== FALSE) {
 		}
 	}
 	
+	// close curl connection
 	curl_close($curl);
 } else if ($curl === FALSE) {
 	// if curl failed to execute, create a response.
