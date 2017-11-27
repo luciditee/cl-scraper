@@ -48,14 +48,16 @@ Returns a JSON object with the following anatomy:
         "askingPrice": "$80",
         "location": "Apple Valley",
         "datetime": "2017-11-25 17:00",
-        "itemlink": "https:\/\/minneapolis.craigslist.org\/url-goes-here"
+        "itemlink": "https:\/\/minneapolis.craigslist.org\/url-goes-here",
+		"img": "\/9j\/4AAQSkZJRgABAQAAAQABAAD\/2wBDAAoHBwgHBgoICAgLCgoLDh . . ."
       },
       {
         "itemName": "Vintage Macintosh Plus 1 MB",
         "askingPrice": "$100",
         "location": "Minneapolis",
         "datetime": "2017-11-21 20:21",
-        "itemlink": "https:\/\/minneapolis.craigslist.org\/url-goes-here"
+        "itemlink": "https:\/\/minneapolis.craigslist.org\/url-goes-here",
+		"img": "\/9j\/4AAQSkZJRgABAQAAAQABAAD\/2wBDAAoHBwgHBgoICAgLCgoLDh . . ."
       },
 	  
 	  ... 
